@@ -9,7 +9,7 @@ var Enemy = function () {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     //this will determine the speed at which the enemy moves
-    this.speed = Math.floor(Math.random() * 5 + 1);
+    this.speed = randomSpeed();
 };
 
 // Update the enemy's position, required method for game
@@ -22,7 +22,16 @@ Enemy.prototype.update = function (dt) {
         this.x += this.speed;
     } else {
         this.x = -101;
+        this.speed = randomSpeed();
         this.y = randomY();
+    }
+
+    if (player.x - this.x <= 75 && player.x - this.x > -60 && this.y === player.y) {
+        console.log('Collision!!!');
+        console.log(player.x);
+        console.log(this.x);
+        player.x = 202;
+        player.y = 400;
     }
 };
 
@@ -119,14 +128,17 @@ function randomY() {
     switch (Math.ceil(Math.random() * 3)) {
         case 1:
             return 60;
-            break;
         case 2:
             return 145;
-            break;
         case 3:
             return 230;
-            break;
         default:
             return 60;
     }
+}
+
+//Helper function that returns a random whole number
+//between 1 and 7 to be used as a "speed" coefficient
+function randomSpeed() {
+    return Math.floor(Math.random() * 7 + 1);
 }
