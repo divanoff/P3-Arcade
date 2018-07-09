@@ -66,6 +66,9 @@ Player.prototype.handleInput = function (keyString) {
         case 'up':
             if (this.y > 0) {
                 this.y -= 85;
+                if (this.y < 0) {
+                    gameWon(this);
+                }
             }
             break;
         case 'down':
@@ -102,6 +105,8 @@ setTimeout(() => {
 }, 10000);
 
 var player = new Player();
+
+var winCount = 0;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -154,5 +159,15 @@ function detectCollision(enemy, player) {
     if (player.x - enemy.x < 75 && player.x - enemy.x > -60 && enemy.y === player.y) {
         player.x = 202;
         player.y = 400;
+        winCount = 0;
     }
+}
+
+function gameWon(player) {
+    setTimeout(() => {
+        player.x = 202;
+        player.y = 400;
+        winCount++;
+        console.log(winCount);
+    }, 500);
 }
