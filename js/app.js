@@ -160,6 +160,7 @@ function detectCollision(enemy, player) {
         player.x = 202;
         player.y = 400;
         winCount = 0;
+        updateCounter(winCount);
     }
 }
 
@@ -169,5 +170,10 @@ function gameWon(player) {
         player.y = 400;
         winCount++;
         console.log(winCount);
+        updateCounter(winCount);
     }, 500);
+}
+
+function updateCounter(num) {
+    document.querySelector('#counter').innerHTML = num;
 }
