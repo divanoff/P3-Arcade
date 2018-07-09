@@ -26,13 +26,7 @@ Enemy.prototype.update = function (dt) {
         this.y = randomY();
     }
 
-    if (player.x - this.x <= 75 && player.x - this.x > -60 && this.y === player.y) {
-        console.log('Collision!!!');
-        console.log(player.x);
-        console.log(this.x);
-        player.x = 202;
-        player.y = 400;
-    }
+    detectCollision(this, player);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -122,6 +116,16 @@ document.addEventListener('keyup', function (e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+function detectCol() {
+    if (player.x - this.x <= 75 && player.x - this.x > -60 && this.y === player.y) {
+        console.log('Collision!!!');
+        console.log(player.x);
+        console.log(this.x);
+        player.x = 202;
+        player.y = 400;
+    }
+}
+
 //This returns a random Y coordinate for the enemy so it's
 //placed randomly in one of the three rows
 function randomY() {
@@ -141,4 +145,14 @@ function randomY() {
 //between 1 and 7 to be used as a "speed" coefficient
 function randomSpeed() {
     return Math.floor(Math.random() * 7 + 1);
+}
+
+/**
+ * Detects collision between an enemy object and a player object
+ */
+function detectCollision(enemy, player) {
+    if (player.x - enemy.x < 75 && player.x - enemy.x > -60 && enemy.y === player.y) {
+        player.x = 202;
+        player.y = 400;
+    }
 }
