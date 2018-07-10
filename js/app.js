@@ -105,8 +105,8 @@ setTimeout(() => {
 }, 10000);
 
 var player = new Player();
-
 var winCount = 0;
+var highScore = 0;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -152,9 +152,8 @@ function randomSpeed() {
     return Math.floor(Math.random() * 7 + 1);
 }
 
-/**
- * Detects collision between an enemy object and a player object
- */
+
+//Detects collision between an enemy object and a player object
 function detectCollision(enemy, player) {
     if (player.x - enemy.x < 75 && player.x - enemy.x > -60 && enemy.y === player.y) {
         player.x = 202;
@@ -164,16 +163,23 @@ function detectCollision(enemy, player) {
     }
 }
 
+// When game is won reset player position, update win counter and high score
 function gameWon(player) {
     setTimeout(() => {
         player.x = 202;
         player.y = 400;
         winCount++;
         console.log(winCount);
-        updateCounter(winCount);
+        updateCounter();
+        updateHighScore();
     }, 500);
 }
 
-function updateCounter(num) {
-    document.querySelector('#counter').innerHTML = num;
+function updateCounter() {
+    document.getElementById('counter').innerHTML = winCount;
+}
+
+function updateHighScore() {
+    highScore = winCount > highScore ? winCount : highScore;
+    document.getElementById('high-score').innerHTML = highScore;
 }
